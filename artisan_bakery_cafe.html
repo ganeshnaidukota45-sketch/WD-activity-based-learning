@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amber & Flour - Artisan Bakery & Cafe</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            500: '#FF7A00',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Custom scrollbar for cart and drawers */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #FF7A00; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800 flex flex-col min-h-screen relative antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- TOP ANNOUNCEMENT BAR -->
+    <div class="bg-brand-500 text-white text-xs md:text-sm font-medium py-2 px-4 text-center flex justify-between items-center">
+        <div class="container mx-auto flex justify-between items-center">
+            <span class="w-full text-center sm:text-left">🥖 Fresh artisan sourdough baked daily at 6:00 AM! Free local delivery on orders over $35.</span>
+            <div class="hidden sm:flex items-center space-x-4 shrink-0 text-xs">
+                <span><i class="fa-solid fa-phone mr-1"></i> (555) 234-5678</span>
+                <span><i class="fa-solid fa-clock mr-1"></i> Mon-Sat: 6am - 7pm</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN NAVIGATION BAR -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-sm transition-all duration-200">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#hero" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-full bg-brand-500 flex items-center justify-center text-white text-xl font-bold shadow-md group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-wheat-awn"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-black tracking-tight text-stone-900 block leading-tight">AMBER & FLOUR</span>
+                        <span class="text-[10px] tracking-widest text-brand-600 font-bold uppercase block">Artisan Bakery</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav Links -->
+                <nav class="hidden md:flex items-center space-x-8 font-medium text-stone-700">
+                    <a href="#hero" class="hover:text-brand-500 transition-colors py-2 border-b-2 border-transparent hover:border-brand-500">Home</a>
+                    <a href="#menu" class="hover:text-brand-500 transition-colors py-2 border-b-2 border-transparent hover:border-brand-500">Menu</a>
+                    <a href="#about" class="hover:text-brand-500 transition-colors py-2 border-b-2 border-transparent hover:border-brand-500">Our Story</a>
+                    <a href="#special-orders" class="hover:text-brand-500 transition-colors py-2 border-b-2 border-transparent hover:border-brand-500">Custom Cakes</a>
+                    <a href="#testimonials" class="hover:text-brand-500 transition-colors py-2 border-b-2 border-transparent hover:border-brand-500">Reviews</a>
+                    <a href="#contact" class="hover:text-brand-500 transition-colors py-2 border-b-2 border-transparent hover:border-brand-500">Contact</a>
+                </nav>
+
+                <!-- Right Header Actions -->
+                <div class="flex items-center space-x-3 sm:space-x-4">
+                    <!-- Search Button -->
+                    <button id="search-toggle-btn" aria-label="Search menu" class="p-2.5 text-stone-600 hover:text-brand-500 hover:bg-stone-100 rounded-full transition">
+                        <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                    </button>
+
+                    <!-- Cart Toggle Button -->
+                    <button id="cart-toggle-btn" aria-label="Open Shopping Cart" class="relative p-2.5 bg-brand-500 text-white rounded-full hover:bg-brand-600 transition shadow-md hover:shadow-lg flex items-center justify-center">
+                        <i class="fa-solid fa-basket-shopping text-lg"></i>
+                        <span id="cart-badge" class="absolute -top-1 -right-1 bg-stone-900 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold border-2 border-white scale-0 transition-transform duration-200">0</span>
+                    </button>
+
+                    <!-- Mobile Menu Toggle Button -->
+                    <button id="mobile-menu-btn" aria-label="Toggle Navigation Menu" class="md:hidden p-2 text-stone-700 hover:text-brand-500 rounded-lg focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inline Quick Search Bar (Collapsible) -->
+        <div id="search-bar-container" class="hidden border-t border-stone-200 bg-stone-50 py-3 px-4 shadow-inner">
+            <div class="container mx-auto max-w-xl relative">
+                <input type="text" id="menu-search-input" placeholder="Search breads, pastries, cakes, drinks..." class="w-full pl-10 pr-10 py-2.5 rounded-full border border-stone-300 focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm shadow-sm">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-stone-400"></i>
+                <button id="clear-search-btn" class="absolute right-3.5 top-2.5 text-stone-400 hover:text-stone-600 p-1 text-xs">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-stone-200 bg-white px-4 pt-2 pb-6 space-y-3 shadow-lg">
+            <a href="#hero" class="mobile-nav-link block py-2.5 px-3 rounded-md font-medium text-stone-700 hover:bg-brand-50 hover:text-brand-500">Home</a>
+            <a href="#menu" class="mobile-nav-link block py-2.5 px-3 rounded-md font-medium text-stone-700 hover:bg-brand-50 hover:text-brand-500">Menu</a>
+            <a href="#about" class="mobile-nav-link block py-2.5 px-3 rounded-md font-medium text-stone-700 hover:bg-brand-50 hover:text-brand-500">Our Story</a>
+            <a href="#special-orders" class="mobile-nav-link block py-2.5 px-3 rounded-md font-medium text-stone-700 hover:bg-brand-50 hover:text-brand-500">Custom Cakes</a>
+            <a href="#testimonials" class="mobile-nav-link block py-2.5 px-3 rounded-md font-medium text-stone-700 hover:bg-brand-50 hover:text-brand-500">Reviews</a>
+            <a href="#contact" class="mobile-nav-link block py-2.5 px-3 rounded-md font-medium text-stone-700 hover:bg-brand-50 hover:text-brand-500">Contact Us</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="relative bg-stone-900 text-white overflow-hidden py-20 md:py-32">
+        <div class="absolute inset-0 opacity-40 mix-blend-overlay">
+            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1600&q=80" alt="Bakery Background" class="w-full h-full object-cover">
+        </div>
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-2xl">
+                <span class="inline-block px-3 py-1 bg-brand-500/20 text-brand-500 border border-brand-500/30 rounded-full text-xs font-semibold tracking-wider uppercase mb-4">Handcrafted Daily</span>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6">
+                    Baked with passion. <br>Served with warmth.
+                </h1>
+                <p class="text-stone-300 text-base sm:text-lg mb-8 leading-relaxed">
+                    From slow-fermented organic sourdough to delicate flaky croissants and bespoke celebration cakes, we bring traditional European baking techniques to your neighborhood table.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#menu" class="px-6 py-3.5 bg-brand-500 hover:bg-brand-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition transform active:scale-95 text-center">
+                        Explore Our Menu <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                    <a href="#special-orders" class="px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/20 transition transform active:scale-95 text-center">
+                        Order Custom Cake
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HIGHLIGHT STATS / FEATURES -->
+    <section class="bg-stone-100 py-8 border-b border-stone-200">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div class="p-3">
+                    <div class="text-brand-500 text-2xl font-black mb-1">100% Organic</div>
+                    <div class="text-xs sm:text-sm text-stone-600 font-medium">Stone-Ground Flours</div>
+                </div>
+                <div class="p-3">
+                    <div class="text-brand-500 text-2xl font-black mb-1">48-Hour</div>
+                    <div class="text-xs sm:text-sm text-stone-600 font-medium">Sourdough Fermentation</div>
+                </div>
+                <div class="p-3">
+                    <div class="text-brand-500 text-2xl font-black mb-1">Fresh Daily</div>
+                    <div class="text-xs sm:text-sm text-stone-600 font-medium">Baked Every Morning</div>
+                </div>
+                <div class="p-3">
+                    <div class="text-brand-500 text-2xl font-black mb-1">4.9 ★★★★★</div>
+                    <div class="text-xs sm:text-sm text-stone-600 font-medium">Over 1,200 Reviews</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BAKERY MENU SECTION -->
+    <section id="menu" class="py-16 md:py-24 bg-stone-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-stone-900 mb-3">Fresh From The Oven</h2>
+                <p class="text-stone-600 text-sm sm:text-base">Filter through our fresh daily offerings and add your favorites directly to your basket.</p>
+            </div>
+
+            <!-- Category Filter Buttons -->
+            <div class="flex items-center justify-center flex-wrap gap-2 mb-10" id="category-filters">
+                <button data-category="all" class="filter-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-sm bg-brand-500 text-white">All Items</button>
+                <button data-category="bread" class="filter-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-sm bg-white text-stone-700 hover:bg-stone-200">Artisan Breads</button>
+                <button data-category="pastry" class="filter-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-sm bg-white text-stone-700 hover:bg-stone-200">Pastries & Croissants</button>
+                <button data-category="cake" class="filter-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-sm bg-white text-stone-700 hover:bg-stone-200">Cakes & Tarts</button>
+                <button data-category="coffee" class="filter-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-sm bg-white text-stone-700 hover:bg-stone-200">Coffee & Drinks</button>
+            </div>
+
+            <!-- Menu Items Grid -->
+            <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Dynamically populated via JS -->
+            </div>
+
+            <!-- Empty Search Results Message -->
+            <div id="no-results" class="hidden text-center py-12">
+                <i class="fa-solid fa-cookie-bite text-5xl text-stone-300 mb-4"></i>
+                <h3 class="text-xl font-bold text-stone-700 mb-1">No items found</h3>
+                <p class="text-stone-500 text-sm">Try adjusting your search query or switching categories.</p>
+                <button id="reset-filter-btn" class="mt-4 px-4 py-2 bg-brand-500 text-white rounded-lg text-sm font-semibold hover:bg-brand-600 transition">View All Menu Items</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT / STORY SECTION -->
+    <section id="about" class="py-16 md:py-24 bg-white border-y border-stone-200">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80" alt="Master Baker at Work" class="rounded-2xl shadow-2xl w-full object-cover h-[420px]">
+                    <div class="absolute -bottom-6 -right-6 bg-brand-500 text-white p-6 rounded-2xl shadow-xl hidden sm:block max-w-xs">
+                        <p class="text-3xl font-black mb-1">15+ Years</p>
+                        <p class="text-xs text-brand-100 font-medium">Of perfecting natural sourdough fermentation and French pastry craftsmanship.</p>
+                    </div>
+                </div>
+                <div>
+                    <span class="text-brand-500 font-bold uppercase text-xs tracking-wider">Our Heritage</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-stone-900 mt-2 mb-6">Crafted with patience, simple ingredients & love.</h2>
+                    <p class="text-stone-600 leading-relaxed mb-4">
+                        Founded in 2011, Amber & Flour started with a single stone deck oven and a commitment to pure, unadulterated baking. We never use artificial preservatives, commercial quick-yeast for our sourdoughs, or pre-made mixes.
+                    </p>
+                    <p class="text-stone-600 leading-relaxed mb-6">
+                        Every loaf takes up to 48 hours to ferment naturally, unlocking rich flavor profiles and making it gentler on your digestion.
+                    </p>
+
+                    <div class="space-y-3">
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-check text-brand-500 mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-stone-900 text-sm">Local Grain Sourcing</h4>
+                                <p class="text-stone-500 text-xs">Milled locally using sustainable organic grains.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-check text-brand-500 mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-stone-900 text-sm">Pure French Butter</h4>
+                                <p class="text-stone-500 text-xs">84% butterfat for unmatched croissant flakiness.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CUSTOM CAKES / SPECIAL ORDERS SECTION -->
+    <section id="special-orders" class="py-16 md:py-24 bg-stone-100">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-stone-200 grid grid-cols-1 md:grid-cols-12">
+                <div class="md:col-span-5 bg-brand-500 p-8 text-white flex flex-col justify-between">
+                    <div>
+                        <span class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Custom Creation</span>
+                        <h3 class="text-3xl font-extrabold mt-4 mb-3">Order a Custom Cake</h3>
+                        <p class="text-brand-100 text-sm leading-relaxed mb-6">
+                            Planning a wedding, birthday, or corporate celebration? Request a custom quote and design consultation from our pastry chef.
+                        </p>
+                    </div>
+                    <div class="space-y-4 text-xs border-t border-brand-400/50 pt-6">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-calendar-check text-lg"></i>
+                            <span>Minimum 72 hours notice required</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-cake-candles text-lg"></i>
+                            <span>Dietary options: Gluten-Free & Vegan available</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-7 p-8">
+                    <form id="cake-order-form" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Your Name *</label>
+                                <input type="text" id="cake-name" required class="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm" placeholder="Jane Doe">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Phone Number *</label>
+                                <input type="tel" id="cake-phone" required class="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm" placeholder="(555) 000-0000">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Event Date *</label>
+                                <input type="date" id="cake-date" required class="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Flavor Base</label>
+                                <select id="cake-flavor" class="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm bg-white">
+                                    <option value="Vanilla Bean & Berry">Vanilla Bean & Fresh Berries</option>
+                                    <option value="Dark Chocolate Ganache">Dark Chocolate Ganache</option>
+                                    <option value="Salted Caramel Praline">Salted Caramel Praline</option>
+                                    <option value="Lemon Lavender">Lemon Lavender</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Cake Size / Guests</label>
+                            <select id="cake-size" class="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm bg-white">
+                                <option value="Small (6 inch - 8 Servings)">Small (6" - 8 Servings) - Approx. $45</option>
+                                <option value="Medium (8 inch - 15 Servings)">Medium (8" - 15 Servings) - Approx. $75</option>
+                                <option value="Large (10 inch - 25 Servings)">Large (10" - 25 Servings) - Approx. $110</option>
+                                <option value="Two-Tier (40+ Servings)">Two-Tiered Celebration (40+ Servings) - Custom Quote</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Design Request & Details</label>
+                            <textarea id="cake-details" rows="3" class="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm" placeholder="Tell us about color themes, inscriptions, dietary requirements, or special toppings..."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition">
+                            Submit Custom Order Request
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS SECTION -->
+    <section id="testimonials" class="py-16 md:py-24 bg-stone-50 border-t border-stone-200">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-brand-500 font-bold uppercase text-xs tracking-wider">Customer Praise</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-stone-900 mt-1">What Our Community Says</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200 flex flex-col justify-between">
+                    <div>
+                        <div class="text-amber-400 text-sm mb-3">★★★★★</div>
+                        <p class="text-stone-600 text-sm italic mb-4">"Hands down the best sourdough in the city. The crust has that perfect blistered crackle and the crumb is soft and airy. My weekend morning essential!"</p>
+                    </div>
+                    <div class="flex items-center gap-3 border-t border-stone-100 pt-4">
+                        <div class="w-9 h-9 rounded-full bg-brand-100 text-brand-700 font-bold flex items-center justify-center text-xs">SP</div>
+                        <div>
+                            <h4 class="font-bold text-stone-900 text-xs">Sarah Jenkins</h4>
+                            <span class="text-[11px] text-stone-400">Verified Local Buyer</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200 flex flex-col justify-between">
+                    <div>
+                        <div class="text-amber-400 text-sm mb-3">★★★★★</div>
+                        <p class="text-stone-600 text-sm italic mb-4">"We ordered a 2-tier Vanilla Berry cake for our anniversary party and everyone was raving about it. Beautiful design and wasn't overly sweet!"</p>
+                    </div>
+                    <div class="flex items-center gap-3 border-t border-stone-100 pt-4">
+                        <div class="w-9 h-9 rounded-full bg-brand-100 text-brand-700 font-bold flex items-center justify-center text-xs">MR</div>
+                        <div>
+                            <h4 class="font-bold text-stone-900 text-xs">Marcus Rivera</h4>
+                            <span class="text-[11px] text-stone-400">Custom Order Client</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200 flex flex-col justify-between">
+                    <div>
+                        <div class="text-amber-400 text-sm mb-3">★★★★★</div>
+                        <p class="text-stone-600 text-sm italic mb-4">"Their Almond Croissant paired with an Oat Milk Latte is perfection. Flaky layers and rich almond frangipane. Always friendly staff too!"</p>
+                    </div>
+                    <div class="flex items-center gap-3 border-t border-stone-100 pt-4">
+                        <div class="w-9 h-9 rounded-full bg-brand-100 text-brand-700 font-bold flex items-center justify-center text-xs">EL</div>
+                        <div>
+                            <h4 class="font-bold text-stone-900 text-xs">Emily Chen</h4>
+                            <span class="text-[11px] text-stone-400">Regular Neighborhood Guest</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT & HOURS SECTION -->
+    <section id="contact" class="py-16 md:py-24 bg-white border-t border-stone-200">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Info & Hours -->
+                <div>
+                    <span class="text-brand-500 font-bold uppercase text-xs tracking-wider">Visit Our Bakery</span>
+                    <h2 class="text-3xl font-extrabold text-stone-900 mt-1 mb-6">Stop by for hot bread & fresh coffee</h2>
+                    
+                    <div class="space-y-6 text-stone-600 text-sm">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-500 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-location-dot text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-stone-900 text-base">Location</h4>
+                                <p>452 Artisan Way, Bakery District<br>Portland, OR 97201</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-500 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-clock text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-stone-900 text-base">Opening Hours</h4>
+                                <p class="mt-1">Monday – Friday: <span class="font-semibold text-stone-800">6:00 AM – 6:30 PM</span></p>
+                                <p>Saturday: <span class="font-semibold text-stone-800">7:00 AM – 5:00 PM</span></p>
+                                <p>Sunday: <span class="font-semibold text-stone-800">7:00 AM – 2:00 PM</span> (Or until sold out)</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-500 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-envelope text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-stone-900 text-base">Get in Touch</h4>
+                                <p>Email: hello@amberandflour.com</p>
+                                <p>Phone: (555) 234-5678</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Contact / Inquiry Form -->
+                <div class="bg-stone-50 p-8 rounded-3xl border border-stone-200">
+                    <h3 class="text-xl font-bold text-stone-900 mb-2">Send us a message</h3>
+                    <p class="text-stone-500 text-xs mb-6">Have questions about catering, allergens, or reservations? Drop us a line.</p>
+                    
+                    <form id="contact-form" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Name</label>
+                            <input type="text" id="contact-name" required class="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm bg-white" placeholder="Your full name">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Email</label>
+                            <input type="email" id="contact-email" required class="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm bg-white" placeholder="your@email.com">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Message</label>
+                            <textarea id="contact-message" rows="4" required class="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm bg-white" placeholder="How can we help you?"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-stone-900 hover:bg-black text-white font-bold rounded-xl transition shadow">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-stone-900 text-stone-400 py-12 mt-auto border-t border-stone-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center text-white font-bold text-sm">
+                            <i class="fa-solid fa-wheat-awn"></i>
+                        </div>
+                        <span class="text-white font-bold text-lg">AMBER & FLOUR</span>
+                    </div>
+                    <p class="text-xs leading-relaxed text-stone-400">Artisan breads, pastries, and handcrafted treats baked with heart and highest quality natural ingredients.</p>
+                </div>
+
+                <div>
+                    <h5 class="text-white font-semibold text-sm mb-3">Quick Links</h5>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#hero" class="hover:text-brand-500 transition">Home</a></li>
+                        <li><a href="#menu" class="hover:text-brand-500 transition">Our Menu</a></li>
+                        <li><a href="#about" class="hover:text-brand-500 transition">Our Bakery Story</a></li>
+                        <li><a href="#special-orders" class="hover:text-brand-500 transition">Custom Cake Orders</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-white font-semibold text-sm mb-3">Categories</h5>
+                    <ul class="space-y-2 text-xs">
+                        <li><button onclick="filterMenu('bread')" class="hover:text-brand-500 text-left transition">Sourdough & Breads</button></li>
+                        <li><button onclick="filterMenu('pastry')" class="hover:text-brand-500 text-left transition">French Pastries</button></li>
+                        <li><button onclick="filterMenu('cake')" class="hover:text-brand-500 text-left transition">Cakes & Tarts</button></li>
+                        <li><button onclick="filterMenu('coffee')" class="hover:text-brand-500 text-left transition">Specialty Coffee</button></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-white font-semibold text-sm mb-3">Follow Our Oven</h5>
+                    <p class="text-xs mb-3">Stay updated with daily special bakes and seasonal creations.</p>
+                    <div class="flex space-x-3">
+                        <a href="javascript:void(0)" onclick="showToast('Follow us on Instagram @AmberAndFlour!')" class="w-8 h-8 rounded-full bg-stone-800 hover:bg-brand-500 hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-instagram text-sm"></i></a>
+                        <a href="javascript:void(0)" onclick="showToast('Visit our Facebook page!')" class="w-8 h-8 rounded-full bg-stone-800 hover:bg-brand-500 hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-facebook-f text-sm"></i></a>
+                        <a href="javascript:void(0)" onclick="showToast('Check our Pinterest board for cake designs!')" class="w-8 h-8 rounded-full bg-stone-800 hover:bg-brand-500 hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-pinterest-p text-sm"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-stone-800 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-stone-500 gap-4">
+                <p>&copy; 2026 Amber & Flour Artisan Bakery. All rights reserved.</p>
+                <div class="flex space-x-4">
+                    <a href="javascript:void(0)" onclick="showToast('Privacy Policy: We protect your data.')" class="hover:underline">Privacy Policy</a>
+                    <a href="javascript:void(0)" onclick="showToast('Terms of Service: Freshness guaranteed!')" class="hover:underline">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CART SIDE DRAWER MODAL -->
+    <div id="cart-drawer-overlay" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div id="cart-drawer" class="fixed inset-y-0 right-0 w-full max-w-md bg-white shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-in-out">
+            <!-- Drawer Header -->
+            <div class="p-4 sm:p-6 border-b border-stone-200 flex items-center justify-between bg-stone-50">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-basket-shopping text-brand-500 text-xl"></i>
+                    <h3 class="text-lg font-bold text-stone-900">Your Bakery Basket</h3>
+                </div>
+                <button id="close-cart-btn" class="p-2 text-stone-400 hover:text-stone-700 rounded-full hover:bg-stone-200 transition">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Drawer Items Body -->
+            <div id="cart-items-container" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
+                <!-- Dynamically rendered cart items -->
+            </div>
+
+            <!-- Drawer Footer Summary -->
+            <div class="p-4 sm:p-6 border-t border-stone-200 bg-stone-50 space-y-4">
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between text-stone-600">
+                        <span>Subtotal</span>
+                        <span id="cart-subtotal" class="font-semibold">$0.00</span>
+                    </div>
+                    <div class="flex justify-between text-stone-600">
+                        <span>Estimated Tax (8%)</span>
+                        <span id="cart-tax" class="font-semibold">$0.00</span>
+                    </div>
+                    <div class="flex justify-between text-base font-bold text-stone-900 pt-2 border-t border-stone-200">
+                        <span>Total</span>
+                        <span id="cart-total" class="text-brand-600">$0.00</span>
+                    </div>
+                </div>
+
+                <div class="flex gap-2">
+                    <button id="clear-cart-btn" class="px-4 py-3 border border-stone-300 text-stone-600 hover:bg-stone-100 font-semibold rounded-xl text-xs transition">
+                        Clear Cart
+                    </button>
+                    <button id="checkout-btn" class="flex-1 py-3 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-xl shadow-md transition text-center text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                        Proceed to Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRODUCT DETAIL MODAL -->
+    <div id="product-modal-overlay" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-200 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-stone-200 relative transform scale-95 transition-transform duration-200" id="product-modal-content">
+            <button id="close-modal-btn" class="absolute top-4 right-4 z-10 w-8 h-8 bg-white/80 hover:bg-white text-stone-700 rounded-full flex items-center justify-center shadow backdrop-blur transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modal-body-content">
+                <!-- Dynamically filled -->
+            </div>
+        </div>
+    </div>
+
+    <!-- CHECKOUT MODAL -->
+    <div id="checkout-modal-overlay" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-200 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full overflow-hidden border border-stone-200 p-6 relative">
+            <button id="close-checkout-btn" class="absolute top-4 right-4 text-stone-400 hover:text-stone-700 p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="text-xl font-extrabold text-stone-900 mb-1">Complete Pickup Order</h3>
+            <p class="text-xs text-stone-500 mb-6">Review your details for bakery pickup or delivery.</p>
+
+            <form id="checkout-form" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Order Type</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="flex items-center justify-center gap-2 p-2.5 rounded-lg border border-stone-300 cursor-pointer text-xs font-semibold bg-stone-50 has-[:checked]:bg-brand-50 has-[:checked]:border-brand-500 has-[:checked]:text-brand-600">
+                            <input type="radio" name="order_type" value="pickup" checked class="hidden">
+                            <i class="fa-solid fa-store"></i> Store Pickup
+                        </label>
+                        <label class="flex items-center justify-center gap-2 p-2.5 rounded-lg border border-stone-300 cursor-pointer text-xs font-semibold bg-stone-50 has-[:checked]:bg-brand-50 has-[:checked]:border-brand-500 has-[:checked]:text-brand-600">
+                            <input type="radio" name="order_type" value="delivery" class="hidden">
+                            <i class="fa-solid fa-truck"></i> Local Delivery
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Full Name *</label>
+                    <input type="text" id="checkout-name" required class="w-full px-3.5 py-2 rounded-lg border border-stone-300 text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="Alex Morgan">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Phone Number *</label>
+                    <input type="tel" id="checkout-phone" required class="w-full px-3.5 py-2 rounded-lg border border-stone-300 text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="(555) 123-4567">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Pickup / Delivery Time</label>
+                    <select id="checkout-time" class="w-full px-3.5 py-2 rounded-lg border border-stone-300 text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none bg-white">
+                        <option value="Today - ASAP (approx 30 mins)">Today - ASAP (approx 30 mins)</option>
+                        <option value="Today - 4:00 PM">Today - 4:00 PM</option>
+                        <option value="Tomorrow Morning - 8:00 AM">Tomorrow Morning - 8:00 AM</option>
+                    </select>
+                </div>
+
+                <div class="bg-stone-50 p-3 rounded-xl border border-stone-200 text-xs space-y-1">
+                    <div class="flex justify-between font-bold text-stone-800">
+                        <span>Total Due at Counter:</span>
+                        <span id="checkout-total-display" class="text-brand-600">$0.00</span>
+                    </div>
+                    <p class="text-stone-400 text-[11px]">Pay upon pickup or delivery with cash or card.</p>
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-xl shadow-md transition">
+                    Confirm & Place Order
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 space-y-2 pointer-events-none"></div>
+
+    <!-- JAVASCRIPT LOGIC & STATE MANAGEMENT -->
+    <script>
+        // -------------------------------------------------------------
+        // MENU DATASTORE
+        // -------------------------------------------------------------
+        const menuItems = [
+            {
+                id: 1,
+                name: "Country Country Sourdough",
+                category: "bread",
+                price: 8.50,
+                rating: 4.9,
+                badge: "Bestseller",
+                image: "https://images.unsplash.com/photo-1585478259715-876acc5be8eb?auto=format&fit=crop&w=600&q=80",
+                description: "48-hour slow fermented organic sourdough with a deep caramelised blistered crust and open elastic crumb.",
+                allergens: "Gluten"
+            },
+            {
+                id: 2,
+                name: "Classic French Croissant",
+                category: "pastry",
+                price: 4.25,
+                rating: 5.0,
+                badge: "Fresh Baked",
+                image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80",
+                description: "Hand-laminated with pure butter from Normandy. Exceptionally golden, flaky, and buttery layers.",
+                allergens: "Gluten, Dairy, Eggs"
+            },
+            {
+                id: 3,
+                name: "Pain au Chocolat",
+                category: "pastry",
+                price: 4.75,
+                rating: 4.8,
+                badge: "Popular",
+                image: "https://images.unsplash.com/photo-1608198093002-ad4e005484ec?auto=format&fit=crop&w=600&q=80",
+                description: "Flaky butter croissant dough stuffed with two sticks of rich, dark Valrhona French chocolate.",
+                allergens: "Gluten, Dairy, Eggs, Soy"
+            },
+            {
+                id: 4,
+                name: "Vanilla Berry Tart",
+                category: "cake",
+                price: 6.50,
+                rating: 4.9,
+                badge: "Seasonal",
+                image: "https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=600&q=80",
+                description: "Crisp sweet crust filled with silky Madagascar vanilla pastry cream and topped with organic fresh berries.",
+                allergens: "Gluten, Dairy, Eggs"
+            },
+            {
+                id: 5,
+                name: "Multigrain Seeded Loaf",
+                category: "bread",
+                price: 9.00,
+                rating: 4.7,
+                badge: "Healthy",
+                image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80",
+                description: "Nutritious whole wheat loaf packed with toasted pumpkin seeds, sunflower seeds, flax, and sesame.",
+                allergens: "Gluten, Sesame"
+            },
+            {
+                id: 6,
+                name: "Artisan Cappuccino",
+                category: "coffee",
+                price: 4.50,
+                rating: 4.9,
+                badge: "House Blend",
+                image: "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80",
+                description: "Double shot of locally roasted espresso with velvety micro-foamed milk.",
+                allergens: "Dairy (Oat/Almond alternatives available)"
+            },
+            {
+                id: 7,
+                name: "Cinnamon Cardamom Bun",
+                category: "pastry",
+                price: 4.50,
+                rating: 4.8,
+                badge: "Fan Favorite",
+                image: "https://images.unsplash.com/photo-1509365465985-25d11c17e812?auto=format&fit=crop&w=600&q=80",
+                description: "Nordic-style twisted brioche bun infused with fragrant crushed cardamom and cinnamon sugar.",
+                allergens: "Gluten, Dairy, Eggs"
+            },
+            {
+                id: 8,
+                name: "Dark Chocolate Tart",
+                category: "cake",
+                price: 7.00,
+                rating: 5.0,
+                badge: "Decadent",
+                image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80",
+                description: "Rich 70% dark chocolate ganache resting on a delicate cocoa sable dough with sea salt flakes.",
+                allergens: "Gluten, Dairy, Eggs"
+            },
+            {
+                id: 9,
+                name: "Cold Brew Coffee",
+                category: "coffee",
+                price: 5.00,
+                rating: 4.7,
+                badge: "Refreshing",
+                image: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80",
+                description: "Steeped for 20 hours to extract smooth, low-acid coffee notes over ice.",
+                allergens: "None"
+            }
+        ];
+
+        // -------------------------------------------------------------
+        // APPLICATION STATE
+        // -------------------------------------------------------------
+        let cart = [];
+        let currentCategory = 'all';
+        let searchQuery = '';
+
+        // -------------------------------------------------------------
+        // DOM ELEMENTS
+        // -------------------------------------------------------------
+        const menuGrid = document.getElementById('menu-grid');
+        const noResults = document.getElementById('no-results');
+        const cartBadge = document.getElementById('cart-badge');
+        const cartItemsContainer = document.getElementById('cart-items-container');
+        const cartSubtotalEl = document.getElementById('cart-subtotal');
+        const cartTaxEl = document.getElementById('cart-tax');
+        const cartTotalEl = document.getElementById('cart-total');
+        const checkoutTotalDisplay = document.getElementById('checkout-total-display');
+
+        // Drawers & Modals
+        const cartDrawerOverlay = document.getElementById('cart-drawer-overlay');
+        const cartDrawer = document.getElementById('cart-drawer');
+        const cartToggleBtn = document.getElementById('cart-toggle-btn');
+        const closeCartBtn = document.getElementById('close-cart-btn');
+        const clearCartBtn = document.getElementById('clear-cart-btn');
+
+        const searchToggleBtn = document.getElementById('search-toggle-btn');
+        const searchBarContainer = document.getElementById('search-bar-container');
+        const menuSearchInput = document.getElementById('menu-search-input');
+        const clearSearchBtn = document.getElementById('clear-search-btn');
+
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        const productModalOverlay = document.getElementById('product-modal-overlay');
+        const productModalContent = document.getElementById('product-modal-content');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const modalBodyContent = document.getElementById('modal-body-content');
+
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const checkoutModalOverlay = document.getElementById('checkout-modal-overlay');
+        const closeCheckoutBtn = document.getElementById('close-checkout-btn');
+        const checkoutForm = document.getElementById('checkout-form');
+        const cakeOrderForm = document.getElementById('cake-order-form');
+        const contactForm = document.getElementById('contact-form');
+
+        // -------------------------------------------------------------
+        // INITIALIZATION
+        // -------------------------------------------------------------
+        window.addEventListener('DOMContentLoaded', () => {
+            renderMenu();
+            setupEventListeners();
+            updateCartUI();
+        });
+
+        // -------------------------------------------------------------
+        // MENU RENDER & FILTERING
+        // -------------------------------------------------------------
+        function renderMenu() {
+            menuGrid.innerHTML = '';
+
+            const filteredItems = menuItems.filter(item => {
+                const matchesCategory = currentCategory === 'all' || item.category === currentCategory;
+                const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                      item.description.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            if (filteredItems.length === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+                filteredItems.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = "bg-white rounded-2xl overflow-hidden border border-stone-200 shadow-sm hover:shadow-xl transition duration-300 flex flex-col group";
+                    card.innerHTML = `
+                        <div class="relative h-48 overflow-hidden cursor-pointer" onclick="openProductModal(${item.id})">
+                            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            <span class="absolute top-3 left-3 bg-white/90 backdrop-blur text-brand-600 font-bold text-[11px] px-2.5 py-1 rounded-full shadow">
+                                ${item.badge}
+                            </span>
+                            <span class="absolute top-3 right-3 bg-stone-900/70 text-white font-semibold text-xs px-2 py-1 rounded-md">
+                                ★ ${item.rating.toFixed(1)}
+                            </span>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-lg font-bold text-stone-900 mb-1 cursor-pointer hover:text-brand-500 transition" onclick="openProductModal(${item.id})">
+                                    ${item.name}
+                                </h3>
+                                <p class="text-stone-500 text-xs line-clamp-2 mb-4 leading-relaxed">
+                                    ${item.description}
+                                </p>
+                            </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-stone-100">
+                                <span class="text-lg font-extrabold text-stone-900">$${item.price.toFixed(2)}</span>
+                                <button onclick="addToCart(${item.id})" class="px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm active:scale-95">
+                                    <i class="fa-solid fa-plus"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    menuGrid.appendChild(card);
+                });
+            }
+        }
+
+        function filterMenu(category) {
+            currentCategory = category;
+            // Update active state on filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.dataset.category === category) {
+                    btn.className = "filter-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-sm bg-brand-500 text-white";
+                } else {
+                    btn.className = "filter-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-sm bg-white text-stone-700 hover:bg-stone-200";
+                }
+            });
+            renderMenu();
+        }
+
+        // -------------------------------------------------------------
+        // CART MANAGEMENT LOGIC
+        // -------------------------------------------------------------
+        function addToCart(productId, quantity = 1) {
+            const product = menuItems.find(p => p.id === productId);
+            if (!product) return;
+
+            const existingIndex = cart.findIndex(item => item.id === productId);
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity += quantity;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: quantity
+                });
+            }
+
+            updateCartUI();
+            showToast(`Added ${product.name} to basket!`);
+        }
+
+        function updateQuantity(productId, delta) {
+            const index = cart.findIndex(item => item.id === productId);
+            if (index > -1) {
+                cart[index].quantity += delta;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+            }
+            updateCartUI();
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+            showToast("Item removed from basket");
+        }
+
+        function clearCart() {
+            cart = [];
+            updateCartUI();
+            showToast("Basket cleared");
+        }
+
+        function updateCartUI() {
+            // Calculate total items count
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartBadge.textContent = totalCount;
+            if (totalCount > 0) {
+                cartBadge.classList.remove('scale-0');
+            } else {
+                cartBadge.classList.add('scale-0');
+            }
+
+            // Render Cart Container Items
+            cartItemsContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="text-center py-12 text-stone-400">
+                        <i class="fa-solid fa-basket-shopping text-4xl mb-3"></i>
+                        <p class="text-sm font-semibold text-stone-600">Your basket is empty</p>
+                        <p class="text-xs">Add items from the menu to get started.</p>
+                    </div>
+                `;
+                checkoutBtn.disabled = true;
+            } else {
+                checkoutBtn.disabled = false;
+                cart.forEach(item => {
+                    const itemEl = document.createElement('div');
+                    itemEl.className = "flex items-center gap-3 p-3 bg-stone-50 rounded-xl border border-stone-200";
+                    itemEl.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}" class="w-14 h-14 object-cover rounded-lg shrink-0">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-bold text-stone-900 text-xs truncate">${item.name}</h4>
+                            <p class="text-brand-600 font-extrabold text-xs">$${(item.price * item.quantity).toFixed(2)}</p>
+                            <div class="flex items-center gap-2 mt-1">
+                                <button onclick="updateQuantity(${item.id}, -1)" class="w-5 h-5 bg-white border border-stone-300 rounded flex items-center justify-center text-xs text-stone-600 hover:bg-stone-100">
+                                    <i class="fa-solid fa-minus text-[9px]"></i>
+                                </button>
+                                <span class="text-xs font-bold text-stone-800">${item.quantity}</span>
+                                <button onclick="updateQuantity(${item.id}, 1)" class="w-5 h-5 bg-white border border-stone-300 rounded flex items-center justify-center text-xs text-stone-600 hover:bg-stone-100">
+                                    <i class="fa-solid fa-plus text-[9px]"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button onclick="removeFromCart(${item.id})" class="text-stone-400 hover:text-red-500 p-1 text-xs">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    `;
+                    cartItemsContainer.appendChild(itemEl);
+                });
+            }
+
+            // Calculations
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const tax = subtotal * 0.08;
+            const total = subtotal + tax;
+
+            cartSubtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+            cartTaxEl.textContent = `$${tax.toFixed(2)}`;
+            cartTotalEl.textContent = `$${total.toFixed(2)}`;
+            checkoutTotalDisplay.textContent = `$${total.toFixed(2)}`;
+        }
+
+        // -------------------------------------------------------------
+        // PRODUCT MODAL DETAILS
+        // -------------------------------------------------------------
+        function openProductModal(productId) {
+            const item = menuItems.find(p => p.id === productId);
+            if (!item) return;
+
+            modalBodyContent.innerHTML = `
+                <div class="h-56 overflow-hidden relative">
+                    <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                    <span class="absolute top-4 left-4 bg-brand-500 text-white font-bold text-xs px-3 py-1 rounded-full shadow">
+                        ${item.badge}
+                    </span>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-extrabold text-stone-900">${item.name}</h3>
+                        <span class="text-xl font-black text-brand-600">$${item.price.toFixed(2)}</span>
+                    </div>
+                    <p class="text-stone-600 text-sm leading-relaxed mb-4">${item.description}</p>
+                    
+                    <div class="bg-stone-50 p-3 rounded-xl border border-stone-200 mb-6 text-xs space-y-1">
+                        <p class="text-stone-500"><strong>Allergens:</strong> ${item.allergens}</p>
+                        <p class="text-stone-500"><strong>Rating:</strong> ★ ${item.rating.toFixed(1)} / 5.0</p>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <button onclick="addToCart(${item.id}); closeProductModal();" class="flex-1 py-3 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-xl shadow transition text-sm">
+                            Add to Basket
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            productModalOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                productModalOverlay.classList.remove('opacity-0');
+                productModalContent.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeProductModal() {
+            productModalOverlay.classList.add('opacity-0');
+            productModalContent.classList.add('scale-95');
+            setTimeout(() => {
+                productModalOverlay.classList.add('hidden');
+            }, 200);
+        }
+
+        // -------------------------------------------------------------
+        // TOAST NOTIFICATIONS
+        // -------------------------------------------------------------
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = "bg-stone-900 text-white text-xs sm:text-sm px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 transform translate-y-4 opacity-0 transition-all duration-300 pointer-events-auto border border-stone-700";
+            toast.innerHTML = `
+                <i class="fa-solid fa-circle-check text-brand-500"></i>
+                <span>${message}</span>
+            `;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-4', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-4', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // -------------------------------------------------------------
+        // EVENT LISTENERS & HANDLERS
+        // -------------------------------------------------------------
+        function setupEventListeners() {
+            // Category Filter Clicks
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    filterMenu(e.target.dataset.category);
+                });
+            });
+
+            // Cart Drawer Controls
+            cartToggleBtn.addEventListener('click', () => {
+                cartDrawerOverlay.classList.remove('opacity-0', 'pointer-events-none');
+                cartDrawer.classList.remove('translate-x-full');
+            });
+
+            closeCartBtn.addEventListener('click', closeCartDrawer);
+            cartDrawerOverlay.addEventListener('click', (e) => {
+                if (e.target === cartDrawerOverlay) closeCartDrawer();
+            });
+
+            clearCartBtn.addEventListener('click', clearCart);
+
+            // Search Toggle & Live Input
+            searchToggleBtn.addEventListener('click', () => {
+                searchBarContainer.classList.toggle('hidden');
+                if (!searchBarContainer.classList.contains('hidden')) {
+                    menuSearchInput.focus();
+                }
+            });
+
+            menuSearchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value.trim();
+                renderMenu();
+            });
+
+            clearSearchBtn.addEventListener('click', () => {
+                menuSearchInput.value = '';
+                searchQuery = '';
+                renderMenu();
+            });
+
+            document.getElementById('reset-filter-btn').addEventListener('click', () => {
+                menuSearchInput.value = '';
+                searchQuery = '';
+                filterMenu('all');
+            });
+
+            // Mobile Navigation Toggle
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // Modal Controls
+            closeModalBtn.addEventListener('click', closeProductModal);
+            productModalOverlay.addEventListener('click', (e) => {
+                if (e.target === productModalOverlay) closeProductModal();
+            });
+
+            // Checkout Modal
+            checkoutBtn.addEventListener('click', () => {
+                if (cart.length === 0) return;
+                closeCartDrawer();
+                checkoutModalOverlay.classList.remove('hidden');
+                setTimeout(() => checkoutModalOverlay.classList.remove('opacity-0'), 10);
+            });
+
+            closeCheckoutBtn.addEventListener('click', closeCheckoutModal);
+
+            checkoutForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('checkout-name').value;
+                showToast(`Thank you ${name}! Your bakery order has been placed.`);
+                cart = [];
+                updateCartUI();
+                closeCheckoutModal();
+            });
+
+            // Custom Cake Order Form Submission
+            cakeOrderForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('cake-name').value;
+                showToast(`Custom cake inquiry received for ${name}! We'll contact you within 24h.`);
+                cakeOrderForm.reset();
+            });
+
+            // Contact Form Submission
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                showToast("Message sent! We'll reply shortly.");
+                contactForm.reset();
+            });
+        }
+
+        function closeCartDrawer() {
+            cartDrawer.classList.add('translate-x-full');
+            cartDrawerOverlay.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function closeCheckoutModal() {
+            checkoutModalOverlay.classList.add('opacity-0');
+            setTimeout(() => checkoutModalOverlay.classList.add('hidden'), 200);
+        }
+    </script>
+</body>
+</html>
